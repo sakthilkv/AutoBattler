@@ -7,7 +7,6 @@ public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTINGS
     final int originalTileSize = 16;
     final int scale = 3;
-
     final int tileSize = originalTileSize * scale; //48 x 48
     final int maxScreenCol = 1920/tileSize;
     final int maxScreenRow = 1080/tileSize;
@@ -15,6 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenHeight = tileSize * maxScreenRow; //1080
 
     Thread gameThread;
+    final int FPS = 60;
+    int actualFPS = 0;
 
     Monster monster;
     int gridStartX, gridStartY, innerBoxSize;
@@ -43,9 +44,33 @@ public class GamePanel extends JPanel implements Runnable {
     }
     @Override
     public void run() {
+
+        double drawInterval = 1000000000.0 /FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currTime;
+        long timer = 0;
+        long drawCount = 0;
+
         while(gameThread.isAlive()){
-            update();
-            repaint();
+            currTime = System.nanoTime();
+
+            delta += (currTime - lastTime) / drawInterval;
+            timer += (currTime - lastTime);
+            lastTime = currTime;
+
+            if(delta >= 1){
+                update();
+                repaint();
+                delta--;
+                drawCount++;
+            }
+
+            if(timer >= 1000000000) {
+                actualFPS = (int) drawCount;
+                drawCount = 0;
+                timer = 0;
+            }
         }
     }
 
@@ -58,6 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         monster.draw(g2d);
         drawMonsterInfo(g2d, monster);
+        drawFPS((Graphics2D) g);
     }
 
     public void drawBattleGrid(Graphics g){
@@ -116,6 +142,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2d.setColor(Color.GREEN);
         g2d.drawString(info, infoX + padding, infoY + fm.getAscent());
+    }
+
+    private void drawFPS(Graphics2D g2d) {
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Consolas", Font.PLAIN, 18));
+        g2d.drawString("FPS: " + actualFPS, 10, 20);
     }
 
 }
