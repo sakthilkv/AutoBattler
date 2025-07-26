@@ -31,8 +31,8 @@ public class GamePanel extends JPanel implements Runnable {
         gridStartY = (screenHeight - innerBoxSize * 5 - 100) / 2;
 
         factory = new MonsterFactory(gridStartX, gridStartY, innerBoxSize);
-        factory.createSlimeAt(2, 3);
-        factory.createSlimeAt(4, 1);
+        factory.createDeckCharacter(Slime.class,2, 3);
+        factory.createEnemyCharacter(Slime.class,4, 1);
 
         for (DraggableMonster d : factory.spawned) {
             MouseHandler handler = new MouseHandler(d, gridStartX, gridStartY, innerBoxSize);
