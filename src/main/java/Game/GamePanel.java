@@ -136,7 +136,6 @@ public class GamePanel extends JPanel implements Runnable {
         g2d.setColor(new Color(0, 0, 0, 180));
         g2d.fillRoundRect(infoX, infoY, boxWidth, boxHeight, 10, 10);
 
-        // Draw border
         g2d.setColor(Color.WHITE);
         g2d.drawRoundRect(infoX, infoY, boxWidth, boxHeight, 10, 10);
 
