@@ -6,6 +6,7 @@ public class Monster {
     public int x, y, size;
     public int prevX, prevY;
     public int offsetX, offsetY;
+
     public boolean dragging = false;
 
     public Monster(int x, int y, int size) {

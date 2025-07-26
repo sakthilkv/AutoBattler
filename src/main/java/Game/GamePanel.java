@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
     int actualFPS = 0;
 
-    Monster monster;
+    MonsterFactory factory;
     int gridStartX, gridStartY, innerBoxSize;
 
     public GamePanel() {
@@ -27,15 +27,19 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         innerBoxSize = tileSize * 3;
-
         gridStartX = (screenWidth - innerBoxSize * 8) / 2;
         gridStartY = (screenHeight - innerBoxSize * 5 - 100) / 2;
 
-        monster = new Monster(20, 0, innerBoxSize);
-        monster.placeAtGrid(2, 3, gridStartX, gridStartY, innerBoxSize);
-        MouseHandler handler = new MouseHandler(monster, gridStartX, gridStartY, innerBoxSize);
-        addMouseListener(handler);
-        addMouseMotionListener(handler);
+        factory = new MonsterFactory(gridStartX, gridStartY, innerBoxSize);
+        factory.createSlimeAt(2, 3);
+        factory.createSlimeAt(4, 1);
+
+        for (DraggableMonster d : factory.spawned) {
+            MouseHandler handler = new MouseHandler(d, gridStartX, gridStartY, innerBoxSize);
+            addMouseListener(handler);
+            addMouseMotionListener(handler);
+        }
+
     }
 
     public void startGameThread() {
@@ -81,9 +85,8 @@ public class GamePanel extends JPanel implements Runnable {
         drawBattleGrid(g);
         drawPlayerDeck(g);
         Graphics2D g2d = (Graphics2D) g;
-        monster.draw(g2d);
-        drawMonsterInfo(g2d, monster);
-        drawFPS((Graphics2D) g);
+        factory.drawAll(g2d);
+        drawFPS(g2d);
     }
 
     public void drawBattleGrid(Graphics g){
@@ -122,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2d.dispose();
     }
 
-    public void drawMonsterInfo(Graphics2D g2d, Monster m) {
+    public void drawMonsterInfo(Graphics2D g2d, Entity m) {
         int infoX = m.x;
         int infoY = m.y - 20;
 

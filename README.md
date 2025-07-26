@@ -9,9 +9,12 @@ Auto Battler is a subgenre of strategy video games that typically features chess
 - Drag-and-drop interaction
 - Snapping logic (to deck and battlefield)
 - Valid cell restrictions (no snapping outside)
-
+- Monsters with assets
 ## Preview
 
-![Auto Battler 25-07-2025](docs/AutoBattle_25-07-2025.gif)
+26-07-2025
+![Auto Battler 26-07-2025](docs/AutoBattle_26-07-2025.gif)
 
+25-07-2025
+![Auto Battler 25-07-2025](docs/AutoBattle_25-07-2025.gif)
 ---

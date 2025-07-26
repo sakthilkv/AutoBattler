@@ -4,13 +4,13 @@ import java.awt.event.*;
 
 public class MouseHandler extends MouseAdapter {
 
-    private final Monster monster;
+    private final Draggable monster;
     private final int gridStartX, gridStartY, cellSize;
     private final int deckX = 20;
     private final int deckY = 0;
     private final int deckRows = 7;
 
-    public MouseHandler(Monster monster, int gridStartX, int gridStartY, int cellSize) {
+    public MouseHandler(Draggable monster, int gridStartX, int gridStartY, int cellSize) {
         this.monster = monster;
         this.gridStartX = gridStartX;
         this.gridStartY = gridStartY;
@@ -20,9 +20,7 @@ public class MouseHandler extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         if (monster.getBounds().contains(e.getPoint())) {
-            monster.dragging = true;
-            monster.offsetX = e.getX() - monster.x;
-            monster.offsetY = e.getY() - monster.y;
+            monster.startDrag(e.getX(), e.getY());
             monster.savePosition();
         }
     }
@@ -30,15 +28,14 @@ public class MouseHandler extends MouseAdapter {
     @Override
     public void mouseDragged(MouseEvent e) {
         if (monster.dragging) {
-            monster.x = e.getX() - monster.offsetX;
-            monster.y = e.getY() - monster.offsetY;
+            monster.dragTo(e.getX(), e.getY());
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         if (!monster.dragging) return;
-        monster.dragging = false;
+        monster.stopDrag();
 
         int mx = monster.x;
         int my = monster.y;

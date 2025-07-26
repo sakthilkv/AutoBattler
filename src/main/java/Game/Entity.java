@@ -4,35 +4,27 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 
-public class Entity {
+public abstract class Entity {
     protected int hp;
     protected int attack;
     protected int range;
-    protected int x, y;
-    protected BufferedImage sprite;
+    protected int x, y, size;
 
-    public void update() {
-
-    }
-
-    public void draw(Graphics2D g2d) {
-
-    }
-
+    public abstract void update();
+    public abstract void draw(Graphics2D g2d);
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void loadSprite(String path) {
+    protected BufferedImage sprite;
+
+    protected void loadSprite(String path) {
         try {
-            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path)));
-        } catch (IOException e) {
-            //noinspection CallToPrintStackTrace
+            sprite = ImageIO.read(getClass().getResourceAsStream(path));
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
     }
-
 }
