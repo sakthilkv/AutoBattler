@@ -13,6 +13,9 @@ Auto Battler is a subgenre of strategy video games that typically features chess
 ## Preview
 
 26-07-2025
+![Auto Battler 26-07-2025](docs/AutoBattler_after_assets_2607.png)
+
+26-07-2025
 ![Auto Battler 26-07-2025](docs/AutoBattle_26-07-2025.gif)
 
 25-07-2025

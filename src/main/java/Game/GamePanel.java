@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     MonsterFactory factory;
     int gridStartX, gridStartY, innerBoxSize;
 
+    Image groundTile = new ImageIcon(getClass().getResource("/tiles/Ground_Tile_02_A.png")).getImage();
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -81,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void update(){}
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-
+        drawGround(g);
         drawBattleGrid(g);
         drawPlayerDeck(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -101,6 +102,35 @@ public class GamePanel extends JPanel implements Runnable {
         int startX = (getWidth() - width) / 2;
         int startY = (getHeight() - height - 100) / 2;
 
+        Image[] tileImages = new Image[9];
+        for (int i = 0; i < 9; i++) {
+            tileImages[i] = new ImageIcon(getClass().getResource("/tiles/Decor_Tile_B_0" + (i + 1) + ".png")).getImage();
+        }
+
+        int[][] gridTiles = new int[gridRows][gridCols];
+        for (int row = 0; row < gridRows; row++) {
+            for (int col = 0; col < gridCols; col++) {
+                if (row == 0 && col == 0) gridTiles[row][col] = 1;
+                else if (row == 0 && col == gridCols - 1) gridTiles[row][col] = 3;
+                else if (row == gridRows - 1 && col == 0) gridTiles[row][col] = 7;
+                else if (row == gridRows - 1 && col == gridCols - 1) gridTiles[row][col] = 9;
+                else if (row == 0) gridTiles[row][col] = 2;
+                else if (row == gridRows - 1) gridTiles[row][col] = 8;
+                else if (col == 0) gridTiles[row][col] = 4;
+                else if (col == gridCols - 1) gridTiles[row][col] = 6;
+                else gridTiles[row][col] = 5;
+            }
+        }
+
+        for (int row = 0; row < gridRows; row++) {
+            for (int col = 0; col < gridCols; col++) {
+                int tileType = gridTiles[row][col];
+                int x = startX + col * innerBoxSize;
+                int y = startY + row * innerBoxSize;
+                g2d.drawImage(tileImages[tileType - 1], x, y, innerBoxSize, innerBoxSize, null);
+            }
+        }
+        g2d.setColor(new Color(0, 0, 0, 80));
         for (int row = 0; row < gridRows; row++) {
             for (int col = 0; col < gridCols; col++) {
                 int x = startX + col * innerBoxSize;
@@ -113,15 +143,35 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void drawPlayerDeck(Graphics g){
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(Color.GREEN);
-        int containerSize = tileSize*3;
+        int containerSize = tileSize * 3;
         int deckRows = 7;
         int startX = 20;
         int startY = 0;
-        for(int row = 0; row < deckRows; row++){
+
+        Image deckTile = new ImageIcon(getClass().getResource("/tiles/Deck_Tile.png")).getImage();
+        Image deckTileT = new ImageIcon(getClass().getResource("/tiles/Decor_Tile_B_02.png")).getImage();
+        Image deckTileB = new ImageIcon(getClass().getResource("/tiles/Decor_Tile_B_08.png")).getImage();
+        for (int row = 0; row < deckRows; row++) {
+            int y = startY + row * containerSize;
+            switch(row){
+                case 0:
+                    g2d.drawImage(deckTileT, startX, y, containerSize, containerSize, null);
+                    break;
+                case 6:
+                    g2d.drawImage(deckTileB, startX, y, containerSize, containerSize, null);
+                    break;
+                default:
+                    g2d.drawImage(deckTile, startX, y, containerSize, containerSize, null);
+                    break;
+            }
+        }
+
+        g2d.setColor(new Color(0, 0, 0, 80));
+        for (int row = 0; row < deckRows; row++) {
             int y = startY + row * containerSize;
             g2d.drawRect(startX, y, containerSize, containerSize);
         }
+
         g2d.dispose();
     }
 
@@ -150,6 +200,19 @@ public class GamePanel extends JPanel implements Runnable {
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Consolas", Font.PLAIN, 18));
         g2d.drawString("FPS: " + actualFPS, 10, 20);
+    }
+
+    public void drawGround(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        int tileSizePx = tileSize * 3;
+
+        for (int y = 0; y < screenHeight; y += tileSizePx) {
+            for (int x = 0; x < screenWidth; x += tileSizePx) {
+                g2d.drawImage(groundTile, x, y, tileSizePx, tileSizePx, null);
+            }
+        }
+
+        g2d.dispose();
     }
 
 }
