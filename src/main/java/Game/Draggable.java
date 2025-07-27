@@ -49,6 +49,6 @@ public abstract class Draggable {
         return new Rectangle(x, y, size, size);
     }
 
-    public abstract void draw(Graphics2D g2d);
+    public abstract void draw(Graphics2D g2d, boolean enemy);
     public abstract void update();
 }

@@ -46,8 +46,8 @@ public class MonsterFactory {
 
 
     public void drawAll(java.awt.Graphics2D g2d) {
-        for (DraggableMonster d : spawned) d.draw(g2d);
-        for (Entity d : enemies) d.draw(g2d);
+        for (DraggableMonster d : spawned) d.draw(g2d, false);
+        for (Entity d : enemies) d.draw(g2d, true);
     }
 
     public void updateAll() {

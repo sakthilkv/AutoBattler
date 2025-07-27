@@ -12,7 +12,7 @@ public abstract class Entity {
     protected int x, y, size;
 
     public abstract void update();
-    public abstract void draw(Graphics2D g2d);
+    public abstract void draw(Graphics2D g2d, boolean enemy);
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;

@@ -32,8 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
         gridStartY = (screenHeight - innerBoxSize * 5 - 100) / 2;
 
         factory = new MonsterFactory(gridStartX, gridStartY, innerBoxSize);
-        factory.createDeckCharacter(Slime.class,2, 3);
-        factory.createEnemyCharacter(Slime.class,4, 1);
+        factory.createDeckCharacter(Slime.class,2, 1);
+        factory.createEnemyCharacter(Slime.class,4, 5);
 
         for (DraggableMonster d : factory.spawned) {
             MouseHandler handler = new MouseHandler(d, gridStartX, gridStartY, innerBoxSize);
@@ -88,6 +88,8 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         factory.drawAll(g2d);
         drawFPS(g2d);
+        for (DraggableMonster d : factory.spawned) drawMonsterInfo(g2d,d.monster);
+        for (Entity d : factory.enemies) drawMonsterInfo(g2d,d);
     }
 
     public void drawBattleGrid(Graphics g){
@@ -179,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
         int infoX = m.x;
         int infoY = m.y - 20;
 
-        String info = "X: " + m.x + ", Y: " + m.y;
+        String info = "Health: " + m.hp;
 
         FontMetrics fm = g2d.getFontMetrics();
         int padding = 4;

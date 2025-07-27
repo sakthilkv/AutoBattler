@@ -3,7 +3,7 @@ package Game;
 import java.awt.*;
 
 public class DraggableMonster extends Draggable {
-    private final Entity monster;
+    final Entity monster;
 
     public DraggableMonster(Entity monster) {
         this.monster = monster;
@@ -13,10 +13,10 @@ public class DraggableMonster extends Draggable {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d, boolean enemey) {
         monster.x = x;
         monster.y = y;
-        monster.draw(g2d);
+        monster.draw(g2d, enemey);
     }
 
     @Override

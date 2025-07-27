@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Slime extends Melee {
     public Slime(int x, int y, int size) {
@@ -18,11 +19,19 @@ public class Slime extends Melee {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d, boolean enemy) {
         if (sprite != null) {
-            g2d.drawImage(sprite, x, y, size, size, null);
+            if (enemy) {
+                AffineTransform original = g2d.getTransform();
+                g2d.translate(x + size, y);
+                g2d.scale(-1, 1);
+                g2d.drawImage(sprite, 0, 0, size, size, null);
+                g2d.setTransform(original);
+            } else {
+                g2d.drawImage(sprite, x, y, size, size, null);
+            }
         } else {
-            g2d.setColor(Color.GREEN);
+            g2d.setColor(enemy ? Color.RED : Color.GREEN);
             g2d.fillRect(x, y, size, size);
         }
     }
