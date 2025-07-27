@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         factory = new MonsterFactory(gridStartX, gridStartY, innerBoxSize);
         factory.createDeckCharacter(Slime.class,2, 1);
-        factory.createEnemyCharacter(Slime.class,4, 5);
+        factory.createEnemyCharacter(Mushroom.class,2, 5);
 
         for (DraggableMonster d : factory.spawned) {
             MouseHandler handler = new MouseHandler(d, gridStartX, gridStartY, innerBoxSize);
@@ -179,24 +179,23 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void drawMonsterInfo(Graphics2D g2d, Entity m) {
+        int barWidth = m.size;
+        int barHeight = 8;
         int infoX = m.x;
-        int infoY = m.y - 20;
+        int infoY = m.y - barHeight - 6;
 
-        String info = "Health: " + m.hp;
+        int currentHP = Math.max(0, Math.min(m.hp, m.maxHp));
+        float hpRatio = (float) currentHP / m.maxHp;
+        int filledWidth = (int) (barWidth * hpRatio);
 
-        FontMetrics fm = g2d.getFontMetrics();
-        int padding = 4;
-        int boxWidth = fm.stringWidth(info) + padding * 2;
-        int boxHeight = fm.getHeight();
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fillRect(infoX, infoY, barWidth, barHeight);
 
-        g2d.setColor(new Color(0, 0, 0, 180));
-        g2d.fillRoundRect(infoX, infoY, boxWidth, boxHeight, 10, 10);
+        g2d.setColor(new Color(41, 175, 52, 255));
+        g2d.fillRect(infoX, infoY, filledWidth, barHeight);
 
-        g2d.setColor(Color.WHITE);
-        g2d.drawRoundRect(infoX, infoY, boxWidth, boxHeight, 10, 10);
-
-        g2d.setColor(Color.GREEN);
-        g2d.drawString(info, infoX + padding, infoY + fm.getAscent());
+        g2d.setColor(Color.YELLOW);
+        g2d.drawRect(infoX, infoY, barWidth, barHeight);
     }
 
     private void drawFPS(Graphics2D g2d) {

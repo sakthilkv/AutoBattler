@@ -6,6 +6,7 @@ import java.awt.geom.AffineTransform;
 public class Slime extends Melee {
     public Slime(int x, int y, int size) {
         this.hp = 50;
+        this.maxHp = 50;
         this.attack = 10;
         this.size = size;
         this.x = x;

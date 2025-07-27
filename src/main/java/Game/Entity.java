@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public abstract class Entity {
-    protected int hp;
+    protected int hp, maxHp;
     protected int attack;
     protected int range;
     protected int x, y, size;
