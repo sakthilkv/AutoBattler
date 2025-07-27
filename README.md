@@ -10,7 +10,11 @@ Auto Battler is a subgenre of strategy video games that typically features chess
 - Snapping logic (to deck and battlefield)
 - Valid cell restrictions (no snapping outside)
 - Monsters with assets
+- Implemented Health Bar
 ## Preview
+
+27-07-2025
+![AutoBattler_health_bar_27-07-2025](docs/AutoBattler_health_bar_27-07-2025.png)
 
 26-07-2025
 ![Auto Battler 26-07-2025](docs/AutoBattler_after_assets_2607.png)
