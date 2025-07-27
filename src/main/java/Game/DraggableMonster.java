@@ -13,10 +13,10 @@ public class DraggableMonster extends Draggable {
     }
 
     @Override
-    public void draw(Graphics2D g2d, boolean enemey) {
+    public void draw(Graphics2D g2d, boolean enemy) {
         monster.x = x;
         monster.y = y;
-        monster.draw(g2d, enemey);
+        monster.draw(g2d, enemy);
     }
 
     @Override

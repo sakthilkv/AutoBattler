@@ -2,6 +2,7 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTINGS
@@ -20,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     MonsterFactory factory;
     int gridStartX, gridStartY, innerBoxSize;
 
-    Image groundTile = new ImageIcon(getClass().getResource("/tiles/Ground_Tile_02_A.png")).getImage();
+    Image groundTile = new ImageIcon(Objects.requireNonNull(getClass().getResource("/tiles/Ground_Tile_02_A.png"))).getImage();
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -106,7 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Image[] tileImages = new Image[9];
         for (int i = 0; i < 9; i++) {
-            tileImages[i] = new ImageIcon(getClass().getResource("/tiles/Decor_Tile_B_0" + (i + 1) + ".png")).getImage();
+            tileImages[i] = new ImageIcon(Objects.requireNonNull(getClass().getResource("/tiles/Decor_Tile_B_0" + (i + 1) + ".png"))).getImage();
         }
 
         int[][] gridTiles = new int[gridRows][gridCols];
@@ -150,9 +151,9 @@ public class GamePanel extends JPanel implements Runnable {
         int startX = 20;
         int startY = 0;
 
-        Image deckTile = new ImageIcon(getClass().getResource("/tiles/Deck_Tile.png")).getImage();
-        Image deckTileT = new ImageIcon(getClass().getResource("/tiles/Decor_Tile_B_02.png")).getImage();
-        Image deckTileB = new ImageIcon(getClass().getResource("/tiles/Decor_Tile_B_08.png")).getImage();
+        Image deckTile = new ImageIcon(Objects.requireNonNull(getClass().getResource("/tiles/Deck_Tile.png"))).getImage();
+        Image deckTileT = new ImageIcon(Objects.requireNonNull(getClass().getResource("/tiles/Decor_Tile_B_02.png"))).getImage();
+        Image deckTileB = new ImageIcon(Objects.requireNonNull(getClass().getResource("/tiles/Decor_Tile_B_08.png"))).getImage();
         for (int row = 0; row < deckRows; row++) {
             int y = startY + row * containerSize;
             switch(row){
